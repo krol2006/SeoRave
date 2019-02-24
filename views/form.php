@@ -1,9 +1,5 @@
 <?php
-    if (isset($_COOKIE['language'])) {
-        $langCode = $_COOKIE['language'];
-    } else {
-        $langCode = 'ru';
-    }
+    $langCode = $_POST['language'];
     require '../content/lang_'.$langCode.'.php';
 
     $name = "Имя:". ' ' .$_POST['name'];
@@ -14,7 +10,7 @@
     $to = 'info@webrave.cz';
     
     if (isset($site)){
-        $subject = 'Заявка на сайт!';
+        $subject = 'Заявка на SEO!';
         $message = $name. "\r\n" .$phone. "\r\n" .$email. "\r\n" .$site. "\r\n" .$msg;
     } else {
         $subject = 'Сообщение с контактной формы!';

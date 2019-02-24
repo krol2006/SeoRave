@@ -1,10 +1,19 @@
-<?php 
-    $service = $lang['servicesList'][$_GET['id']];
+<?php
+    $way = parse($_SERVER['REQUEST_URI']);
+    $langCode = $way["language"];
+
+    $service = null;
+    foreach($lang['servicesList'] as $e) {
+        if ($e["name"] == $way["id"]) {
+            $service = $e;
+            break;
+        }
+    }
 ?>
 
 <div class="header">
     <div class="header__logo">
-        <a href="/" class="header__logo__link">seorave</a>
+        <a href="<?= mainPage($langCode); ?>" class="header__logo__link">seorave</a>
     </div>
 
     <h1 class="header__title"><a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="header__title__back"></a><?= $service['title']; ?></h1>
@@ -35,25 +44,27 @@
 </div>
 
 <form method="POST" action="#" class="form">
+    <input type="hidden" value="<?= $service['text']; ?>" name="site">
+
     <div class="form__title">
         <p><?= $service['sendRequest']; ?></p>
     </div>
 
     <div class="form__layout">
         <div class="form__input">
-            <input type="text" placeholder='<?= $lang["name"]; ?>'>
+            <input type="text" placeholder='<?= $lang["name"]; ?>' name="name">
         </div>
 
         <div class="form__input">
-            <input type="tel" placeholder='<?= $lang["phone"]; ?>'>
+            <input type="tel" placeholder='<?= $lang["phone"]; ?>' name="phone">
         </div>
 
         <div class="form__input">
-            <input type="email" placeholder='<?= $lang["email"]; ?>'>
+            <input type="email" placeholder='<?= $lang["email"]; ?>' name="email">
         </div>
 
         <div class="form__input">
-            <textarea placeholder='<?= $lang["message"]; ?>'></textarea>
+            <textarea placeholder='<?= $lang["message"]; ?>' name="message"></textarea>
         </div>
     </div>
 

@@ -1,33 +1,44 @@
 <?php
-    if (isset($_COOKIE['language'])) {
-        $langCode = $_COOKIE['language'];
-    } else {
-        $langCode = 'ru';
-    }
+    include 'route.php';
+
+    $way = parse($_SERVER['REQUEST_URI']);
+
+    $langCode = $way["language"];
+
     require './content/lang_'.$langCode.'.php';
 
-    switch ($_SERVER['REQUEST_URI']) {
-        case '/':
-            $title = $lang['title'];
-            break;
+    switch ($way["page"]) {
         case '':
             $title = $lang['title'];
+            $desc = $lang['mainDescription'];
             break;
-        case '/services':
+        case 'services':
+        if ($way["id"] == "") {
             $title = $lang['services'];
-            break;
-        case '/folio':
-            $title = $lang['folio'];
-            break;
-        case '/contacts':
-            $title = $lang['contacts'];
-            break;
-        default:
-            if(isset($_GET['id'])) {
-                $title = $lang['servicesList'][$_GET['id']]['title'];
+            $desc = $lang['servicesDescription'];
+        } else {
+            $serviceItem = null;
+            foreach($lang['servicesList'] as $e) {
+                if ($e["name"] == $way["id"]) {
+                    $serviceItem = $e;
+                }
+            }
+            if (isset($serviceItem)) {
+                $title = $serviceItem['title'];
+                $desc = $serviceItem['metaDescription'];
             } else {
                 $title = $lang['error'];
+                $desc = $lang['errorDescription'];
             }
+        }
+            break;
+        case 'contacts':
+            $title = $lang['contacts'];
+            $desc = $lang['contactsDescription'];
+            break;
+        default:
+            $title = $lang['error'];
+            $desc = $lang['errorDescription'];
             break;
     };
 ?>
@@ -38,9 +49,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="<?= $desc; ?>">
     <title><?= 'SeoRave | '.$title; ?></title>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="http://seorave.cz/favicon.ico">
     <link rel="stylesheet" href="/css/init.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134628948-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-134628948-1');
+    </script>
 </head>
 <body>
     <?php if ($_SERVER['REQUEST_URI'] !== '/admin') { ?>
@@ -54,42 +75,54 @@
 
         <main class="content">
             <?php 
-                switch ($_SERVER['REQUEST_URI']) {
-                    case '/':
-                        require './views/main.php';
-                        break;
+                switch ($way["page"]) {
                     case '':
                         require './views/main.php';
                         break;
-                    case '/services':                
-                        require './views/services.php';                            
+                    case 'services':                
+                        if ($way["id"] == "") {
+                            require './views/services.php';
+                        } else {
+                            $serviceItem = null;
+                            foreach($lang['servicesList'] as $e) {
+                                if ($e["name"] == $way["id"]) {
+                                    $serviceItem = $e;
+                                    break;
+                                }
+                            }
+                            if (isset($serviceItem)) {
+                                require './views/service.php';
+                            } else {
+                                require './views/404.php';
+                            }
+                        }
                         break;
-                    case '/folio':
-                        require './views/folio.php';
-                        break;
-                    case '/contacts':
+                    case 'contacts':
                         require './views/contacts.php';
                         break;
                     default:
-                        if(isset($_GET['id'])) {
-                            require './views/service.php';
-                        } else {
-                            require './views/404.php';
-                        }
+                        require './views/404.php';
                         break;
                 };
             ?>
         </main>
 
         <aside class="sidebar">
+            <div class="anim" id="anim">  	 
+                <canvas id="animCanvas"></canvas>
+            </div>
+
             <div class="sidebar__layout">
                 <div class="sidebar__langs">
-                    <ul class="sidebar__langs__list">
+                     <ul class="sidebar__langs__list">
                         <li class="sidebar__langs__item">
-                            <a href="#" data-lang="en" class="sidebar__langs__link <?= $langCode == "en" ? "sidebar__langs__link--active" : ""?> ">en</a>
+                            <a href=<?=changeLanguage($way, "en"); ?> data-lang="en" class="sidebar__langs__link <?= $langCode == "en" ? "sidebar__langs__link--active" : ""?> ">en</a>
                         </li>
                         <li class="sidebar__langs__item">
-                            <a href="#" data-lang="ru" class="sidebar__langs__link <?= $langCode == "ru" ? "sidebar__langs__link--active" : ""?>">ru</a>
+                            <a href=<?=changeLanguage($way, "cz"); ?> data-lang="cz" class="sidebar__langs__link <?= $langCode == "cz" ? "sidebar__langs__link--active" : ""?> ">cz</a>
+                        </li>
+                        <li class="sidebar__langs__item">
+                            <a href=<?=changeLanguage($way, "ru"); ?> data-lang="ru" class="sidebar__langs__link <?= $langCode == "ru" ? "sidebar__langs__link--active" : ""?>">ru</a>
                         </li>                    
                     </ul>
                 </div>
@@ -98,7 +131,7 @@
                     <ul class="sidebar__menu__list">
                         <?php foreach($lang['menu'] as $menuItem): ?>
                             <li class="sidebar__menu__item">
-                                <a href="<?= $menuItem["url"] ?>" class="sidebar__menu__link <?= $menuItem["url"] == $_SERVER['REQUEST_URI'] ? "sidebar__menu__link--active" : ""?>"><?= $menuItem["name"] ?></a>
+                                <a href="<?= changePage($way, $menuItem["url"]) ?>" class="sidebar__menu__link <?= $menuItem["url"] == "/".$way["page"] ? "sidebar__menu__link--active" : ""?>"><?= $menuItem["name"] ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -129,11 +162,12 @@
     <?php 
     if ($_SERVER['REQUEST_URI'] == '/folio'):
     ?>
-    <script src="js/photoswipe.min.js"></script>
-    <script src="js/photoswipe-ui-default.min.js"></script> 
-    <script src="js/photoswipe-gallery.js"></script>
+    <script src="http://seorave.cz/js/photoswipe.min.js"></script>
+    <script src="http://seorave.cz/js/photoswipe-ui-default.min.js"></script> 
+    <script src="http://seorave.cz/js/photoswipe-gallery.js"></script>
     <?php endif; ?>
-    <script src="js/main.js"></script>
+    <script src="http://seorave.cz/js/anim.js"></script>
+    <script src="http://seorave.cz/js/main.js"></script>
 
     <?php } else {
         require './admin/index.php';

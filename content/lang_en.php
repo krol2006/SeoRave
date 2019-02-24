@@ -1,10 +1,14 @@
 <?php
     $lang = [
-        'title' => 'Продвижение, раскрутка, SEO-оптимизация и создание сайтов в Праге',  // Тайтл страницы
-        'services' => 'Services for the promotion and development of sites on Prague', // Тайтл страницы
+        'title' => 'Promotion and creation of sites on Prague',  // Тайтл страницы
+        'services' => 'Services for the promotion and <a href="http://webrave.cz" target="_blank">creation</a> of sites in Prague', // Тайтл страницы
         'contacts' => 'Contacts', // Тайтл страницы
         'error' => 'Page not found', // Тайтл страницы
         'about' => 'About us',
+        'mainDescription' => 'Creation and promotion of sites in Prague - studio engaged in the creation of websites in Prague, which is engaged in the fact that we successfully overcome many obstacles, trials, we gain a lot of experience',
+        'servicesDescription' => 'Services for the promotion and creation of sites in Prague | Site advertising in Google, Seznam, Yandex | Basic website optimization for SEO | Landing page | Brochure website | Corporate website | E-shop | SEO-site optimization',
+        'contactsDescription' => 'Services for the promotion and creation of sites in Prague | Site advertising in Google, Seznam, Yandex | Basic website optimization for SEO | Landing page | Brochure website | Corporate website | E-shop | SEO-site optimization',
+        'errorDescription' => 'Services for the promotion and creation of sites in Prague | Site advertising in Google, Seznam, Yandex | Basic website optimization for SEO | Landing page | Brochure website | Corporate website | E-shop | SEO-site optimization',
         'intro' => 'Promotion and <a href="http://webrave.cz" target="_blank">creation</a> of sites in Prague',  // Интро на главной странице
         'price' => 'Price',
         'more' => 'More',
@@ -35,37 +39,43 @@
         'servicesList' => [ // Услуги
             [
                 'id' => 0,
-                'title' => 'Полная раскрутка и продвижение сайта в ТОП',
-                'text' => '<strong>Сайт в ТОП</strong> - это полная SEO - оптимизация от начала до конца, с полным набором функций, настройкой сайта, составлением семантического ядра регистрацией во всех сервисах, рекламой, отчетностью и т.д.',
-                'deadline' => 'Сроки полной SEO - оптимизации, составляют от 1 до 3 месяцев.',
+                'name' => 'full_seo',
+                'title' => 'Full promotion of site to the TOP',
+                'text' => '<strong>Site to TOP</strong> - is full SEO from start to end with a full set of functions, site customization, compilation of the semantic core, registration in all services, advertising, reporting, etc.',
+                'deadline' => 'Term of full SEO-optimization is from 1 to 3 months.',
                 'priceMin' => '15 000 CZK',
                 'priceMax' => '30 000 CZK',
-                'sendRequest' => 'Заказать полную SEO - оптимизации'
+                'sendRequest' => 'Order full SEO-optimization',
+                'metaDescription' => 'Full promotion of site to the TOP is full SEO from start to end with a full set of functions, site customization, compilation of the semantic core, registration in all services, advertising, reporting, etc.'
             ],
             [
                 'id' => 1,
-                'title' => 'Рекламирование сайта в Google, Seznam, Yandex',
-                'text' => '<strong>Рекламирование</strong> это качественная настройка и создание контекстной, баннерной рекламы в популярных поисковых сервисах с минимальными затратами за клик и т.д.',
-                'deadline' => 'Сроки создания и оптимизации рекламы, составляют 1 неделю.',
+                'name' => 'advertising',
+                'title' => 'Site advertising in Google, Seznam, Yandex',
+                'text' => '<strong>Advertising</strong> is a high-quality setting and creation of contextual, banner advertising in popular search engines with minimal cost per click, etc.',
+                'deadline' => 'Term of creating and optimizing advertising is 1 week.',
                 'priceMin' => '5 000 CZK',
             //  'priceMax' => '15 000 CZK',
-                'sendRequest' => 'Заказать рекламирование сайта'
+                'sendRequest' => 'Order site advertising',
+                'metaDescription' => 'Site advertising in Google, Seznam, Yandex is a high-quality setting and creation of contextual, banner advertising in popular search engines with minimal cost per click, etc.'
             ],
             [
                 'id' => 2,
-                'title' => 'Базовая оптимизация сайта под SEO',
-                'text' => '<strong>Базовый сервис</strong> - это базовая аналитика, настройка и адаптация Вашего сайта под популярные поисковые системы, регистрация в определенных сервисах, консультацией, прогнозами и т.д.',
-                'deadline' => 'Сроки проведения оптимизации, составляют 1 неделю.',
+                'name' => 'basic_optimization',
+                'title' => 'Basic website optimization for SEO',
+                'text' => '<strong>Basic service</strong> is basic analytics, setting up and adapting your site for popular search engines, registering with certain services, consulting, forecasts, etc.',
+                'deadline' => 'Term for optimization takes 1 week.',
                 'priceMin' => '5 000 CZK',
             //  'priceMax' => '20 000 CZK',
-                'sendRequest' => 'Заказать базовую оптимизацию сайта'
+                'sendRequest' => 'Order basic website optimization',
+                'metaDescription' => 'Basic website optimization for SEO is basic analytics, setting up and adapting your site for popular search engines, registering with certain services, consulting, forecasts, etc.'
             ]
         ],
         'SEOservice' => [
             'title' => 'Creation and development of site',
             'text' => 'At the present time, few businesses do without their own website, and the Site is the face of the company and our team will be happy to help you to have the best face on the Internet!'
         ],
-        'aboutText' => '<strong>SEORAVE</strong> - продвижение, раскрутка, SEO оптимизация сайтов - это все мы, фирма которая занимается этим в Праге, и подходит к продвижению сайта в ТОП используя все наши творческие стороны, и большую фантазию, а не просто используя готовые механические методы. Ведь правда, поисковые роботы умнеют с каждым днем и нужно иметь не мало смекалки, и фантазии, что бы влюбить их в сайт, и дать им понять, что именно Ваш сайт на базе десятков, сотен, а то и тысяч подобных по тематике сайтов является самым Информативным, самым Быстрым, и самым Удобным. В этом и заключается наша миссия уже многие годы. Путем проб и ошибок, мы поняли в какое вечернее платье или смокинг, нужно нарядить ваш сайт, дабы именно его поисковый робот поднял в ТОП и не отпускал!',
+        'aboutText' => '<strong>SEORAVE</strong> - promotion, SEO optimization of sites - this is all we are, the company that does this in Prague, and comes to the promotion of the site in the TOP using all our creative sides and imagination, and not just using ready-made mechanical methods. After all, the truth is that search robots are getting smarter every day and you need to have a lot of ingenuity and fantasy to make them fall in love with the site, and let them know that it’s your website based on dozens, hundreds, or even thousands of similar websites. The most informative, most fast, and most convenient. This is our mission for many years. Through trial and errors, we understood what evening dress or tuxedo you need to dress up your website, so that its search robot raise to the TOP and do not let go!',
         'aboutList' => [  // Список на странице "О нас"
             [
                 'text' => 'We give a guarantee that your site will be in the TOP.',
